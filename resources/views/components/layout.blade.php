@@ -22,10 +22,8 @@
     </div>
 
 
-    <div class="min-h-screen">
+    <div class="min-h-screen pt-14">
 <x-navbar />
-        @auth
-        @endauth
 
         {{ $slot }}
     </div>

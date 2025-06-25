@@ -1,6 +1,6 @@
 <nav class="bg-gray-800 fixed top-0 left-0 w-full z-50" x-data="{ mobileOpen: false }">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
+        <div class="relative flex h-14 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
                 <button type="button" @click="mobileOpen = !mobileOpen"
@@ -44,8 +44,8 @@
                     </div>
                 </div>
             </div>
-            <div class="items-center flex flex-1">
-                <div class="inline-block relative w-64">
+            <div
+                class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open"
                             class="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded">
@@ -93,18 +93,6 @@
                             </ul>
                         </div>
                     </div>
-                    <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 @auth
                     <button type="button"
                         class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
