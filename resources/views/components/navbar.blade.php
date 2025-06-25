@@ -123,7 +123,7 @@
                                 role="menuitem">{{ __('navbar.profile') }}</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem">{{ __('navbar.settings') }}</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700"
+                            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem">{{ __('navbar.sign out') }}</a>
                         </div>
                     </div>
