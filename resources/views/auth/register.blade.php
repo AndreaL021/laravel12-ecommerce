@@ -1,11 +1,8 @@
 <x-layout>
     <x-slot name="title">Register</x-slot>
-    <div class="flex items-center justify-center min-h-screen">
+    <div class="flex items-center justify-center min-h-[calc(100vh-56px)]">
 
         <div class="w-full md:w-1/2 mx-3">
-
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <form method="POST" action="{{ route('register') }}" @submit="loading = true">
                 @csrf
@@ -15,7 +12,6 @@
                     <x-input-label for="name" :value="__('auth.name')" />
                     <input id="name" class="block mt-1 w-full" type="text" name="name"
                         value="{{ old('name') }}" required autofocus autocomplete="name">
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <!-- Email Address -->
@@ -23,7 +19,6 @@
                     <x-input-label for="email" :value="__('auth.email')" />
                     <input id="email" class="block mt-1 w-full" type="text" name="email"
                         value="{{ old('email') }}" required autocomplete="username">
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
@@ -39,7 +34,6 @@
                             <i :class="show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
                         </div>
                     </div>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
 
                 </div>
@@ -58,7 +52,6 @@
                             <i :class="show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
                         </div>
                     </div>
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
 
                 <div class="my-4">

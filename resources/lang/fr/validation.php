@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'error' => 'Erreur',
+    'error_message' => 'Erreur lors du chargement des données',
     'accepted' => 'Le champ :attribute doit être accepté.',
     'accepted_if' => 'Le champ :attribute doit être accepté lorsque :other est :value.',
     'active_url' => 'Le champ :attribute doit être une URL valide.',

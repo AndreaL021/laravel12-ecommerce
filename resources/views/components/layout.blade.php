@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{-- font awesome --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <title>{{ $title }}</title>
@@ -21,9 +23,24 @@
         <div class="spinner"></div>
     </div>
 
+    <x-navbar />
+
 
     <div class="min-h-screen pt-14">
-<x-navbar />
+        <!-- Session Status -->
+        <x-snackbar :status="session('status')" :title="__(session('title'))" :message="__(session('message'))" />
+        <!-- Error Snackbar -->
+        @if ($errors->any())
+            @php
+                $errorList = '<ul class="list-disc list-inside">';
+                foreach ($errors->all() as $error) {
+                    $errorList .= '<li>' . e(__($error)) . '</li>';
+                }
+                $errorList .= '</ul>';
+            @endphp
+
+            <x-snackbar :status="'error'" :message="$errorList" :title="__('validation.error')" :validation="true" />
+        @endif
 
         {{ $slot }}
     </div>

@@ -28,7 +28,8 @@
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="{{ route('home') }}" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                        <a href="{{ route('home') }}"
+                            class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                             aria-current="page">{{ __('navbar.home') }}</a>
                         <a href="#"
                             class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>
@@ -107,7 +108,7 @@
                                 class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <img class="size-8 rounded-full"
-                                    src="{{ asset('images/user.png') }}"
+                                    src="{{ auth()->user()?->img ? asset('storage/' . auth()->user()->img) : asset('images/user.png') }}"
                                     alt="error" />
                             </button>
                         </div>
@@ -115,9 +116,9 @@
                         <div x-show="open" @click.away="open = false" x-transition
                             class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5"
                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700"
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem">{{ __('navbar.profile') }}</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700"
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem">{{ __('navbar.settings') }}</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -145,7 +146,8 @@
                 src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                 alt="Your Company" />
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="{{ route('home') }}" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+            <a href="{{ route('home') }}"
+                class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
                 aria-current="page">{{ __('navbar.home') }}</a>
             <a href="#"
                 class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>

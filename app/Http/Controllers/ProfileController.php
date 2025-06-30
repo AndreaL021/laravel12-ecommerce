@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -26,15 +28,38 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+            $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+            // Gestione immagine
+            if ($request->hasFile('img')) {
+                // Elimina immagine precedente
+                if ($user->img) {
+                    Storage::disk('public')->delete($user->img);
+                }
 
-        $request->user()->save();
+                // Salva nuova immagine con nome custom
+                $path = $request->file('img')->storeAs(
+                    'profiles',
+                    $user->id . '.' . $request->file('img')->getClientOriginalExtension(),
+                    'public'
+                );
+                $user->img = $path;
+            }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+            // Aggiorna dati
+            $user->fill($request->validated());
+
+            if ($user->isDirty('email')) {
+                $user->email_verified_at = null;
+            }
+
+            $user->save();
+
+            return Redirect::route('profile.edit')->with([
+                'status' => 'success',
+                'title' => '',
+                'message' => 'profile.profile_updated'
+            ]);
     }
 
     /**
@@ -42,19 +67,29 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+            $request->validateWithBag('userDeletion', [
+                'password' => ['required', 'current_password'],
+            ]);
 
-        $user = $request->user();
+            $user = $request->user();
 
-        Auth::logout();
+            // ✅ Elimina l'immagine se esiste
+            if ($user->img) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->img);
+            }
 
-        $user->delete();
+            Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            $user->delete();
 
-        return Redirect::to('/');
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return Redirect::to('/')
+                ->with([
+                    'status' => 'success',
+                    'title' => '',
+                    'message' => 'profile.profile_deleted'
+                ]);
     }
 }

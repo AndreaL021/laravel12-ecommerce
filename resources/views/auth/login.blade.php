@@ -3,22 +3,15 @@
     <div class="flex items-center justify-center min-h-[calc(100vh-56px)]">
 
         <div class="w-full md:w-1/2 mx-3">
-            
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
+
 
             <form method="POST" action="{{ route('login') }}" @submit="loading = true">
                 @csrf
-                {{-- <x-snackbar>
-    <x-slot name="title">test</x-slot>
-    <x-slot name="message">message</x-slot>
-    </x-snackbar> --}}
                 <!-- Email -->
                 <div>
                     <x-input-label for="email" :value="__('auth.email')" />
                     <input id="email" class="block mt-1 w-full" type="email" name="email"
                         value="{{ old('email') }}" required autofocus autocomplete="email">
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
@@ -34,7 +27,6 @@
                             <i :class="show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
                         </div>
                     </div>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <!-- Remember Me -->

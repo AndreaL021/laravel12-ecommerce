@@ -3,9 +3,6 @@
     <div class="flex items-center text-center justify-center mt-5">
         <div class="w-full md:w-1/2 mx-3">
 
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-
             <form method="POST" action="{{ route('password.store') }}" @submit="loading = true">
                 @csrf
 
@@ -17,7 +14,6 @@
                     <x-input-label for="email" :value="__('auth.email')" />
                     <input id="email" class="block mt-1 w-full" type="email" name="email"
                         value="{{ old('email', $request->email) }}" required autofocus autocomplete="email" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
@@ -33,7 +29,6 @@
                             <i :class="show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
                         </div>
                     </div>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <!-- Confirm Password -->
@@ -49,7 +44,6 @@
                             <i :class="show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
                         </div>
 
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
 
                     <div class="flex items-center justify-end mt-4">

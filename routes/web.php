@@ -13,14 +13,6 @@ Route::get('/', function () {
 
 
 
-Route::post('/locale/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'it', 'fr'])) {
-        session()->put('locale', $locale);
-    }
-
-    return redirect()->back();
-})->name('locale.switch');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,4 +20,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+Route::post('/locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'it', 'fr'])) {
+        session()->put('locale', $locale);
+    }
+
+    return redirect()->back()->with([
+            'status' => 'success',
+            'title' => '',
+            'message' => 'locale.change'
+        ]);
+})->name('locale.switch');
+
+require __DIR__ . '/auth.php';
