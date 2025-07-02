@@ -7,41 +7,24 @@ use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\AnnouncementRequest;
 
 class AnnouncementController extends Controller
 {
-    /**
-     * Mostra tutti gli annunci.
-     */
     public function index()
     {
-        $announcements = Announcement::with('categories', 'images')->latest()->paginate(10);
+        $announcements = Auth::user()->announcements()->latest()->paginate(10);
         return view('announcements.index', compact('announcements'));
     }
 
-    /**
-     * Mostra il form per creare un nuovo annuncio.
-     */
     public function create()
     {
         $categories = Category::all();
         return view('announcements.create', compact('categories'));
     }
 
-    /**
-     * Salva un nuovo annuncio.
-     */
-    public function store(Request $request)
+    public function store(AnnouncementRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'des' => 'required|string',
-            'price' => 'required|numeric',
-            'categories' => 'array',
-            'categories.*' => 'exists:categories,id',
-            'images.*' => 'image|max:2048',
-        ]);
-
         $announcement = Announcement::create([
             'title' => $request->title,
             'des' => $request->des,
@@ -49,12 +32,12 @@ class AnnouncementController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        // Categorie
+        // Associa categorie
         if ($request->filled('categories')) {
             $announcement->categories()->sync($request->categories);
         }
 
-        // Immagini
+        // Salva immagini
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
                 $path = $img->store('announcements', 'public');
@@ -62,49 +45,50 @@ class AnnouncementController extends Controller
             }
         }
 
-        return redirect()->route('announcements.index')->with([
+        return redirect()->route('announcement.index')->with([
             'status' => 'success',
             'title' => '',
             'message' => 'Annuncio creato con successo.'
         ]);
     }
 
-    /**
-     * Mostra un singolo annuncio.
-     */
     public function show(Announcement $announcement)
     {
         $announcement->load('categories', 'images');
         return view('announcements.show', compact('announcement'));
     }
 
-    /**
-     * Mostra il form di modifica.
-     */
     public function edit(Announcement $announcement)
-    {if ($announcement->user_id !== auth()->id()) {
-    abort(403, 'Non sei autorizzato ad accedere a questo annuncio.');
-}
+    {
+        if ($announcement->user_id !== auth()->id()) {
+            
+             return back()->with([
+            'status' => 'danger',
+            'title' => '',
+            'message' => 'validation.authorization'
+        ]);
+        }
         $categories = Category::all();
         return view('announcements.edit', compact('announcement', 'categories'));
     }
 
-    /**
-     * Aggiorna l'annuncio.
-     */
-    public function update(Request $request, Announcement $announcement)
+    public function update(AnnouncementRequest $request, Announcement $announcement)
     {
-if ($announcement->user_id !== auth()->id()) {
-    abort(403, 'Non sei autorizzato ad accedere a questo annuncio.');
-}
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'des' => 'required|string',
-            'price' => 'required|numeric',
-            'categories' => 'array',
-            'categories.*' => 'exists:categories,id',
-            'images.*' => 'image|max:2048',
+        if ($announcement->user_id !== auth()->id()) {
+             return back()->with([
+            'status' => 'danger',
+            'title' => '',
+            'message' => 'validation.authorization'
         ]);
+        }
+        // $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'des' => 'required|string',
+        //     'price' => 'required|numeric',
+        //     'categories' => 'array',
+        //     'categories.*' => 'exists:categories,id',
+        //     'images.*' => 'image|max:2048',
+        // ]);
 
         $announcement->update([
             'title' => $request->title,
@@ -121,21 +105,18 @@ if ($announcement->user_id !== auth()->id()) {
             }
         }
 
-        return redirect()->route('announcements.index')->with([
+        return redirect()->route('announcement.index')->with([
             'status' => 'success',
             'title' => '',
             'message' => 'Annuncio aggiornato con successo.'
         ]);
     }
 
-    /**
-     * Elimina l'annuncio.
-     */
     public function destroy(Announcement $announcement)
     {
-if ($announcement->user_id !== auth()->id()) {
-    abort(403, 'Non sei autorizzato ad accedere a questo annuncio.');
-}
+        if ($announcement->user_id !== auth()->id()) {
+            abort(403, 'Non sei autorizzato ad accedere a questo annuncio.');
+        }
         // elimina immagini fisiche
         foreach ($announcement->images as $image) {
             Storage::disk('public')->delete($image->path);

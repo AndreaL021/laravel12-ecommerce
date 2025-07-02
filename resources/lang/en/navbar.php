@@ -10,5 +10,7 @@ return [
     "profile" => "Your profile",
     "settings" => "Settings",
     "sign out" => "Sign out",
-    "search" => "Search"
+    "search" => "Search",
+    "my_announcements" => "My announcements",
+    "create_announcement" => "Create announcement",
 ];

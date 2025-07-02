@@ -10,5 +10,7 @@ return [
     "profile" => "Profilo",
     "settings" => "Impostazioni",
     "sign out" => "Esci",
-    "search" => "Cerca"
+    "search" => "Cerca",
+    "my_announcements" => "I miei annunci",
+    "create_announcement" => "Crea annuncio",
 ];

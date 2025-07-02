@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
@@ -14,6 +15,17 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
     Route::get('/profile', 'edit')->name('profile.edit');
     Route::patch('/profile', 'update')->name('profile.update');
     Route::delete('/profile', 'destroy')->name('profile.destroy');
+});
+
+
+Route::middleware('auth')->controller(AnnouncementController::class)->group(function () {
+    Route::get('/announcement/user', 'index')->name('announcement.index');
+    Route::get('/announcement/show', 'show')->name('announcement.show');
+    Route::get('/announcement/create', 'create')->name('announcement.create');
+    Route::post('/announcement/store', 'store')->name('announcement.store');
+    Route::get('/announcement/edit/{announcement}', 'edit')->name('announcement.edit');
+    Route::put('/announcement/update/{announcement}', 'update')->name('announcement.update');
+    Route::delete('/announcement/destroy/{announcement}', 'destroy')->name('announcement.destroy');
 });
 
 

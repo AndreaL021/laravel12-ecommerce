@@ -1,36 +1,18 @@
-<nav class="bg-gray-800 fixed top-0 left-0 w-full z-50" x-data="{ mobileOpen: false }">
+<nav class="bg-gray-800 fixed top-0 left-0 w-full z-50">
     <div class="w-full sm:px-3 px-0">
-        <div class="flex flex-wrap items-center justify-between gap-y-2 py-2">
-            <div class="flex items-center sm:hidden">
-                <!-- Mobile menu button-->
-                <button type="button" @click="mobileOpen = !mobileOpen"
-                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset"
-                    aria-controls="mobile-menu" :aria-expanded="mobileOpen.toString()">
-                    {{-- icona apertura dropdown mobile --}}
-                    <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" x-show="!mobileOpen"
-                        stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                    {{-- icona chiusura dropdown mobile --}}
-                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" x-show="mobileOpen"
-                        stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+        <div class="flex flex-wrap items-center justify-between gap-y-2 py-2 px-2">
             <div class="flex flex-1 items-center justify-start">
-                <div class="flex shrink-0 hidden sm:block">
+                <div class="flex shrink-0">
                     <img class="h-8 w-auto"
                         src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                         alt="Your Company" />
                 </div>
-                <div class="hidden sm:ml-6 sm:block">
+                <div class="ml-6">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="{{ route('home') }}"
-                            class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                            aria-current="page">{{ __('navbar.home') }}</a>
+                            class="font-medium text-white"
+                            aria-current="page"><i class="fa-solid fa-house"></i></a>
                         {{-- @auth
                             <a href="#"
                                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>
@@ -45,7 +27,7 @@
 
             <!-- Search -->
             <div
-                class="w-full px-2 sm:w-auto order-3 sm:order-none sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:max-w-xs">
+                class="w-full sm:w-auto order-3 sm:order-none sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:max-w-xs">
                 <div class="relative">
                     <form action="{{ route('search') }}" method="GET">
                         <input placeholder="{{ __('navbar.search') }}" id="search" name="search"
@@ -133,9 +115,11 @@
                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                             tabindex="-1">
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700"
-                                role="menuitem">{{ __('navbar.profile') }}</a>
-                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem">{{ __('navbar.settings') }}</a>
+                            <a href="{{ route('announcement.index') }}" class="block px-4 py-2 text-sm text-gray-700"
+                                role="menuitem">{{ __('navbar.my_announcements') }}</a>
+                            <a href="{{ route('announcement.create') }}" class="block px-4 py-2 text-sm text-gray-700"
+                                role="menuitem">{{ __('navbar.create_announcement') }}</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
@@ -153,28 +137,6 @@
                         class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.signup') }}</a>
                 @endguest
             </div>
-        </div>
-    </div>
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu" x-show="mobileOpen">
-        <div class="space-y-1 px-2 pt-2 pb-3">
-            <img class="h-8 w-auto ml-2"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company" />
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="{{ route('home') }}"
-                class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-                aria-current="page">{{ __('navbar.home') }}</a>
-            <a href="#"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>
-            @auth
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.projects') }}</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.calendar') }}</a>
-            @endauth
         </div>
     </div>
 </nav>
