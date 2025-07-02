@@ -15,7 +15,7 @@ class AnnouncementFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'      => $this->faker->sentence(),
+            'title'      => $this->faker->word(),
             'des'        => $this->faker->paragraph(),
             'price'      => $this->faker->randomFloat(2, 1, 9999),
         ];
