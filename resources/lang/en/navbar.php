@@ -9,5 +9,6 @@ return [
     "signup" => "Sign up",
     "profile" => "Your profile",
     "settings" => "Settings",
-    "sign out" => "Sign out"
+    "sign out" => "Sign out",
+    "search" => "Search"
 ];

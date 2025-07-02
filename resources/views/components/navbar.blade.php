@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 fixed top-0 left-0 w-full z-50" x-data="{ mobileOpen: false }">
     <div class="w-full sm:px-3 px-0">
-        <div class="relative flex h-14 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <div class="flex flex-wrap items-center justify-between gap-y-2 py-2">
+            <div class="flex items-center sm:hidden">
                 <!-- Mobile menu button-->
                 <button type="button" @click="mobileOpen = !mobileOpen"
                     class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset"
@@ -31,20 +31,35 @@
                         <a href="{{ route('home') }}"
                             class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                             aria-current="page">{{ __('navbar.home') }}</a>
-                        <a href="#"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>
-                        @auth
+                        {{-- @auth
                             <a href="#"
                                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.team') }}</a>
                             <a href="#"
                                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.projects') }}</a>
                             <a href="#"
                                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{ __('navbar.calendar') }}</a>
-                        @endauth
+                        @endauth --}}
                     </div>
                 </div>
             </div>
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+            <!-- Search -->
+            <div
+                class="w-full px-2 sm:w-auto order-3 sm:order-none sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:max-w-xs">
+                <div class="relative">
+                    <form action="{{ route('search') }}" method="GET">
+                        <input placeholder="{{ __('navbar.search') }}" id="search" name="search"
+                            autocomplete="search" value="{{ request('search') }}"
+                            class="w-full px-4 py-2 pr-10 rounded-md bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 sm:ml-auto">
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"
                         class="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded">
@@ -115,7 +130,8 @@
                         <!-- Dropdown menu -->
                         <div x-show="open" @click.away="open = false" x-transition
                             class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5"
-                            role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                            tabindex="-1">
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem">{{ __('navbar.profile') }}</a>
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700"

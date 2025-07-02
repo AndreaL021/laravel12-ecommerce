@@ -9,5 +9,6 @@ return [
     "signup" => "Registrati",
     "profile" => "Profilo",
     "settings" => "Impostazioni",
-    "sign out" => "Esci"
+    "sign out" => "Esci",
+    "search" => "Cerca"
 ];

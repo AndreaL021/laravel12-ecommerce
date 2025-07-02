@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
@@ -62,34 +62,42 @@ class ProfileController extends Controller
             ]);
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-            $request->validateWithBag('userDeletion', [
-                'password' => ['required', 'current_password'],
+    
+public function destroy(Request $request): RedirectResponse
+{
+    try {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        // Elimina immagine se esiste
+        if ($user->img) {
+            Storage::disk('public')->delete($user->img);
+        }
+
+        Auth::logout();
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/')->with([
+            'status' => 'success',
+            'title' => '',
+            'message' => 'profile.profile_deleted'
+        ]);
+    } catch (ValidationException $e) {
+        // Reindirizza indietro con errori nel bag `userDeletion` e snackbar
+        return redirect()->back()
+            ->withErrors($e->errors(), 'userDeletion')
+            ->withInput()
+            ->with([
+                'status' => 'error',
+                'title' => '',
+                'message' => 'validation.current_password'
             ]);
-
-            $user = $request->user();
-
-            // ✅ Elimina l'immagine se esiste
-            if ($user->img) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->img);
-            }
-
-            Auth::logout();
-
-            $user->delete();
-
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
-            return Redirect::to('/')
-                ->with([
-                    'status' => 'success',
-                    'title' => '',
-                    'message' => 'profile.profile_deleted'
-                ]);
     }
+}
 }

@@ -2,6 +2,7 @@
 return [
     // Delete
     "profile" => "Profil",
+    "confirm" => "Confirmer",
     "delete_account" => "Supprimer le compte",
     "once" => "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement effacées. Avant de supprimer votre compte, veuillez télécharger toutes les données ou informations que vous souhaitez conserver.",
     "sure" => "Êtes-vous sûr de vouloir supprimer votre compte ?",

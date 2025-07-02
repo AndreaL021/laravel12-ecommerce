@@ -27,6 +27,7 @@ return [
     'confirmed' => 'La conferma del campo :attribute non corrisponde.',
     'contains' => 'Il campo :attribute non contiene un valore richiesto.',
     'current_password' => 'La password è errata.',
+    'password_changed' => 'La password è stata cambiata.',
     'date' => 'Il campo :attribute deve essere una data valida.',
     'date_equals' => 'Il campo :attribute deve essere una data uguale a :date.',
     'date_format' => 'Il campo :attribute deve corrispondere al formato :format.',

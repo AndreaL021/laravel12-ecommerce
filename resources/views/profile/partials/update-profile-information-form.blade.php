@@ -13,7 +13,8 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6"  @submit="loading = true" enctype="multipart/form-data">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" @submit="loading = true"
+        enctype="multipart/form-data">
         @csrf
         @method('patch')
         <div class="flex items-center justify-center p-2">
@@ -24,8 +25,7 @@
                 class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <img id="preview" class="w-[200px] rounded-full"
-                    src="{{ $user->img ? asset('storage/' . $user->img) : asset('images/user.png') }}"
-                    alt="error" />
+                    src="{{ $user->img ? asset('storage/' . $user->img) : asset('images/user.png') }}" alt="error" />
             </button>
         </div>
         <div>
@@ -60,7 +60,9 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button>{{ __('profile.save') }}</button>
+
+            <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-full sm:w-auto px-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{{ __('profile.save') }}</button>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
@@ -73,7 +75,7 @@
     const input = document.getElementById('imageInput');
     const preview = document.getElementById('preview');
 
-    input.addEventListener('change', function (e) {
+    input.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
             preview.src = URL.createObjectURL(file);

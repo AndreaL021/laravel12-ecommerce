@@ -14,7 +14,7 @@
     ];
 @endphp
 @if (!empty($message))
-    <div id="snackbar" onclick="closeSnackbar()" style="top: 60px; cursor: pointer;"
+    <div id="snackbar" onclick="closeSnackbar()" style="top: 60px;"
         class="fixed right-4 z-50 {{ $color['bg'] }} {{ $color['border'] }} {{ $color['text'] }} border-l-4 p-4 rounded shadow transition-opacity duration-300 opacity-100"
         role="alert" aria-live="assertive">
         @if (!empty($title))

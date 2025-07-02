@@ -2,6 +2,7 @@
 return [
     // Delete
     "profile" => "Profilo",
+    "confirm" => "Conferma",
     "delete_account" => "Elimina account",
     "once" => "Una volta eliminato il tuo account, tutte le sue risorse e i suoi dati saranno cancellati in modo permanente. Prima di eliminare il tuo account, scarica tutti i dati o le informazioni che desideri conservare.",
     "sure" => "Sei sicuro di voler eliminare il tuo account?",

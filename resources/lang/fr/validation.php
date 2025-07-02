@@ -27,6 +27,7 @@ return [
     'confirmed' => 'La confirmation du champ :attribute ne correspond pas.',
     'contains' => 'Le champ :attribute ne contient pas une valeur requise.',
     'current_password' => 'Le mot de passe est incorrect.',
+    'password_changed' => 'Le mot de passe a été changé.',
     'date' => 'Le champ :attribute doit être une date valide.',
     'date_equals' => 'Le champ :attribute doit être une date égale à :date.',
     'date_format' => 'Le champ :attribute doit correspondre au format :format.',

@@ -26,7 +26,7 @@
     <x-navbar />
 
 
-    <div class="min-h-screen pt-14">
+    <div class="min-h-screen pt-28 sm:pt-20 md:pt-16 lg:pt-14">
         <!-- Session Status -->
         <x-snackbar :status="session('status')" :title="__(session('title'))" :message="__(session('message'))" />
         <!-- Error Snackbar -->
