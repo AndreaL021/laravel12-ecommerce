@@ -187,4 +187,9 @@ return [
 
     'attributes' => [],
 
+
+    'images-required' => 'Insert at least 1 image.',
+    'images.max' => 'You can upload a maximum of :max images.',
+    'images.prohibited' => 'You have already reached the maximum number of images (5).',
+
 ];

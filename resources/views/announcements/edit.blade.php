@@ -5,15 +5,47 @@
         <div class="w-full md:w-1/2 mx-3">
 
 
+            <!-- Immagini già caricate -->
+            @if ($announcement->images->count())
+                <div class="mt-4">
+                    <p class="font-semibold mb-2">Immagini attuali:</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        @foreach ($announcement->images as $image)
+                            <div class="relative group">
+                                <img src="{{ asset('storage/' . $image->path) }}"
+                                    class="rounded shadow w-full h-32 object-cover" alt="Immagine annuncio">
+
+                                <!-- Pulsante di eliminazione -->
+                                <form method="POST" action="{{ route('images.destroy', $image) }}"
+                                    class="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
+                                    onsubmit="return confirm('Sei sicuro di voler eliminare questa immagine?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="Elimina">
+                                        <i class="fa-solid fa-x"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
             <form method="POST" action="{{ route('announcement.update', compact('announcement')) }}"
                 @submit="loading = true" enctype="multipart/form-data">
                 @csrf
                 @method('put')
+                <!-- Immagini -->
+                <div class="mt-4">
+                    <x-input-label for="images" :value="__('announcement.img')" />
+                    <input id="images" type="file" name="images[]" multiple accept="image/*"
+                        class="block w-full mt-1">
+                    <small class="text-sm text-gray-600">{{ __('announcement.max5') }}</small>
+                </div>
                 <!-- title -->
                 <div>
                     <x-input-label for="title" :value="__('announcement.title')" />
-                    <input id="title" class="block w-full" name="title" value="{{ $announcement->title }}" required
-                        autofocus>
+                    <input id="title" class="block w-full" name="title" value="{{ $announcement->title }}"
+                        required autofocus>
                 </div>
 
                 <!-- des -->
@@ -29,6 +61,19 @@
                         name="price">
                 </div>
 
+                <!-- categorie -->
+                <div class="mt-4">
+                    <x-input-label for="categories" :value="__('announcement.categories')" />
+                    <select name="categories[]" id="categories" multiple
+                        class="block w-full rounded border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @if ($announcement->categories->contains($category->id)) selected @endif>
+                                {{ __($category->name) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <!-- Bottone -->
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded w-full mt-4"
@@ -36,6 +81,16 @@
                     {{ __('announcement.save') }}
                 </button>
 
+            </form>
+            <!-- Elimina annuncio -->
+            <form method="POST" action="{{ route('announcement.destroy', $announcement) }}" class="mt-4"
+                onsubmit="return confirm('Sei sicuro di voler eliminare questo annuncio?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded w-full">
+                    {{ __('announcement.delete') }}
+                </button>
             </form>
 
         </div>

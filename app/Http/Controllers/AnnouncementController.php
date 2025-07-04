@@ -81,14 +81,6 @@ class AnnouncementController extends Controller
             'message' => 'validation.authorization'
         ]);
         }
-        // $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'des' => 'required|string',
-        //     'price' => 'required|numeric',
-        //     'categories' => 'array',
-        //     'categories.*' => 'exists:categories,id',
-        //     'images.*' => 'image|max:2048',
-        // ]);
 
         $announcement->update([
             'title' => $request->title,
@@ -124,7 +116,7 @@ class AnnouncementController extends Controller
 
         $announcement->delete();
 
-        return redirect()->route('announcements.index')->with([
+        return redirect()->route('announcement.index')->with([
             'status' => 'success',
             'title' => '',
             'message' => 'Annuncio eliminato.'

@@ -5,5 +5,8 @@ return [
     "des" => "Description",
     "img" => "Images",
     "price" => "Price",
-    "save" => "save",
+    "save" => "Save",
+    "max5" => "You can upload up to 5 images total.",
+    'delete' => 'Delete announcement',
+    'categories' => 'Categories',
 ];

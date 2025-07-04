@@ -186,4 +186,10 @@ return [
 
     'attributes' => [],
 
+
+
+    'images-required' => 'Inserire almeno 1 immagine.',
+    'images.max' => 'Puoi caricare al massimo :max immagini.',
+    'images.prohibited' => 'Hai già raggiunto il numero massimo di immagini (5).',
+
 ];

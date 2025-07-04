@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AnnouncementImageController;
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'index')->name('home');
@@ -18,6 +19,9 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
 });
 
 
+Route::delete('/images/{image}', [AnnouncementImageController::class, 'destroy'])->name('images.destroy');
+
+
 Route::middleware('auth')->controller(AnnouncementController::class)->group(function () {
     Route::get('/announcement/user', 'index')->name('announcement.index');
     Route::get('/announcement/show', 'show')->name('announcement.show');
@@ -27,6 +31,7 @@ Route::middleware('auth')->controller(AnnouncementController::class)->group(func
     Route::put('/announcement/update/{announcement}', 'update')->name('announcement.update');
     Route::delete('/announcement/destroy/{announcement}', 'destroy')->name('announcement.destroy');
 });
+
 
 
 Route::post('/locale/{locale}', function ($locale) {

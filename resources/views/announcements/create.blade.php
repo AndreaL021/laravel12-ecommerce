@@ -5,28 +5,46 @@
         <div class="w-full md:w-1/2 mx-3">
 
 
-            <form method="POST" action="{{ route('announcement.store') }}" @submit="loading = true" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('announcement.store') }}" @submit="loading = true"
+                enctype="multipart/form-data">
                 @csrf
+                <!-- Immagini -->
+                <div class="mt-4">
+                    <x-input-label for="images" :value="__('announcement.img')" />
+                    <input id="images" type="file" name="images[]" multiple accept="image/*"
+                        class="block w-full mt-1">
+                    <small class="text-sm text-gray-600">{{ __('announcement.max5') }}</small>
+                </div>
                 <!-- title -->
                 <div>
                     <x-input-label for="title" :value="__('announcement.title')" />
-                    <input id="title" class="block w-full" name="title"
-                        value="{{ old('title') }}" required autofocus>
+                    <input id="title" class="block w-full" name="title" value="{{ old('title') }}" required
+                        autofocus>
                 </div>
 
                 <!-- des -->
                 <div class="mt-4">
                     <x-input-label for="des" :value="__('announcement.des')" />
-                        <textarea id="des" class="block w-full"
-                            name="des" required></textarea>
+                    <textarea id="des" class="block w-full" name="des" required></textarea>
                 </div>
 
                 <!-- price -->
                 <div class="mt-4">
                     <x-input-label for="price" :value="__('announcement.price')" />
-                        <input id="price" type="number"
-                            class="block w-full"
-                            name="price">
+                    <input id="price" type="number" class="block w-full" name="price">
+                </div>
+
+                <!-- categorie -->
+                <div class="mt-4">
+                    <x-input-label for="categories" :value="__('announcement.categories')" />
+                    <select name="categories[]" id="categories" multiple
+                        class="block w-full rounded border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">
+                                {{ __($category->name) }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <!-- Bottone -->
