@@ -17,10 +17,33 @@ class AnnouncementController extends Controller
         return view('announcements.index', compact('announcements'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('search');
+        $categoryId  = $request->input('category');
+
+        $announcements = Announcement::where('user_id', Auth::id())
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($sub) use ($query) {
+                    $sub->where('title', 'like', "%{$query}%")
+                        ->orWhere('des', 'like', "%{$query}%");
+                });
+            })
+            ->when($categoryId, function ($q) use ($categoryId) {
+                $q->whereHas('categories', function ($catQuery) use ($categoryId) {
+                    $catQuery->where('categories.id', $categoryId);
+                });
+            })
+            ->latest()
+            ->paginate(20);
+
+        return view('announcements.index', compact('announcements', 'query', 'categoryId'));
+    }
+
+
     public function create()
     {
-        $categories = Category::all();
-        return view('announcements.create', compact('categories'));
+        return view('announcements.create');
     }
 
     public function store(AnnouncementRequest $request)
@@ -54,32 +77,30 @@ class AnnouncementController extends Controller
 
     public function show(Announcement $announcement)
     {
-        $announcement->load('categories', 'images');
         return view('announcements.show', compact('announcement'));
     }
 
     public function edit(Announcement $announcement)
     {
         if ($announcement->user_id !== auth()->id()) {
-            
-             return back()->with([
-            'status' => 'danger',
-            'title' => '',
-            'message' => 'validation.authorization'
-        ]);
+
+            return back()->with([
+                'status' => 'danger',
+                'title' => '',
+                'message' => 'validation.authorization'
+            ]);
         }
-        $categories = Category::all();
-        return view('announcements.edit', compact('announcement', 'categories'));
+        return view('announcements.edit', compact('announcement'));
     }
 
     public function update(AnnouncementRequest $request, Announcement $announcement)
     {
         if ($announcement->user_id !== auth()->id()) {
-             return back()->with([
-            'status' => 'danger',
-            'title' => '',
-            'message' => 'validation.authorization'
-        ]);
+            return back()->with([
+                'status' => 'danger',
+                'title' => '',
+                'message' => 'validation.authorization'
+            ]);
         }
 
         $announcement->update([

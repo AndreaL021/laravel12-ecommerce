@@ -3,7 +3,7 @@
         {{ __('auth.secure_area') }}
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form method="POST" action="{{ route('password.confirm') }}" @submit="loading = true">
         @csrf
 
         <!-- Password -->

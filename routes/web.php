@@ -24,6 +24,7 @@ Route::delete('/images/{image}', [AnnouncementImageController::class, 'destroy']
 
 Route::middleware('auth')->controller(AnnouncementController::class)->group(function () {
     Route::get('/announcement/user', 'index')->name('announcement.index');
+    Route::get('/announcement/search', 'search')->name('announcement.search');
     Route::get('/announcement/show', 'show')->name('announcement.show');
     Route::get('/announcement/create', 'create')->name('announcement.create');
     Route::post('/announcement/store', 'store')->name('announcement.store');

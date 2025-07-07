@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'authorization' => 'You are not allowed to edit this announcement',
+    'authorization' => 'You are not allowed to edit this announcement.',
     'error' => 'Error',
     'error_message' => 'Error loading data',
     'accepted' => 'The :attribute field must be accepted.',

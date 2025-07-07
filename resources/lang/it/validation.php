@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'authorization' => 'Non sei autorizzato a modificare questo annuncio.',
     'error' => 'Errore',
     'error_message' => 'Errore durante il caricamento dei dati',
     'accepted' => 'Il campo :attribute deve essere accettato.',

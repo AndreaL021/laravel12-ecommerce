@@ -1,3 +1,11 @@
+@php
+    $categories_items = $categories->map(
+        fn($cat) => [
+            'id' => $cat['id'],
+            'name' => __($cat['name']),
+        ],
+    );
+@endphp
 <x-layout>
     <x-slot name="title">Create</x-slot>
     <div class="flex items-center justify-center min-h-[calc(100vh-56px)]">
@@ -36,15 +44,9 @@
 
                 <!-- categorie -->
                 <div class="mt-4">
-                    <x-input-label for="categories" :value="__('announcement.categories')" />
-                    <select name="categories[]" id="categories" multiple
-                        class="block w-full rounded border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">
-                                {{ __($category->name) }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <x-select label="{{ __('announcement.categories') }}" :items="$categories_items" name="categories"
+                        multiple></x-select>
+
                 </div>
 
                 <!-- Bottone -->

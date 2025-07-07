@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Announcement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +25,7 @@ class AnnouncementFactory extends Factory
     public function withCategories(int $count = 2): static
     {
         return $this->afterCreating(function (Announcement $announcement) use ($count) {
-            $categories = \App\Models\Category::inRandomOrder()->limit($count)->pluck('id');
+            $categories = Category::inRandomOrder()->limit($count)->pluck('id');
             $announcement->categories()->attach($categories);
         });
     }

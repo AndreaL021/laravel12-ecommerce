@@ -13,7 +13,7 @@
         {{ __('profile.delete_account') }}
     </button>
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable :title="__('profile.delete_account')">
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-6" @submit="loading = true">
             @csrf
             @method('delete')
 

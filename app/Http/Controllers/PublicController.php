@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -12,19 +13,28 @@ class PublicController extends Controller
 
         $announcements = Announcement::latest()
             ->paginate(20);
-
         return view('welcome', compact('announcements'));
     }
     public function search(Request $request)
     {
         $query = $request->input('search');
+        $categoryId  = $request->input('category');
 
-        $announcements = Announcement::where('title', 'like', "%{$query}%")
-            ->orWhere('des', 'like', "%{$query}%")
-            ->with(['images', 'categories'])
+        $announcements = Announcement::query()
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($sub) use ($query) {
+                    $sub->where('title', 'like', "%{$query}%")
+                        ->orWhere('des', 'like', "%{$query}%");
+                });
+            })
+            ->when($categoryId, function ($q) use ($categoryId) {
+                $q->whereHas('categories', function ($catQuery) use ($categoryId) {
+                    $catQuery->where('categories.id', $categoryId);
+                });
+            })
             ->latest()
-            ->paginate(20); // meglio usare paginate per coerenza
+            ->paginate(20);
 
-        return view('welcome', compact('announcements', 'query'));
+        return view('welcome', compact('announcements', 'query', 'categoryId'));
     }
 }

@@ -2,7 +2,7 @@
     <x-slot name="title">Announcements</x-slot>
     <div>
         <div class="flex justify-center items-center">
-            <form action="{{ route('announcement.create') }}" method="get">
+            <form action="{{ route('announcement.create') }}" method="get" @submit="loading = true">
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-5 px-12 rounded">
                     <i class="fa-solid fa-plus"></i>
