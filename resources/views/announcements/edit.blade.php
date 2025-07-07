@@ -21,7 +21,7 @@
                         @foreach ($announcement->images as $image)
                             <div class="relative group">
                                 <img src="{{ asset('storage/' . $image->path) }}"
-                                    class="rounded shadow w-full h-32 object-cover" alt="Immagine annuncio">
+                                    class="rounded shadow w-full h-32 object-contain" alt="Immagine annuncio">
 
                                 <!-- Pulsante di eliminazione -->
                                 <form method="POST" action="{{ route('images.destroy', $image) }}"

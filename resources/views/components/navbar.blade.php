@@ -19,7 +19,7 @@
         <div class="flex flex-wrap items-center justify-between gap-y-2 py-2 px-2">
             <div class="flex flex-1 items-center justify-start">
                 <div class="flex shrink-0">
-                    <img class="h-8 w-auto"
+                    <img class="h-8 w-auto object-contain"
                         src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                         alt="Your Company" />
                 </div>
@@ -123,7 +123,7 @@
                             <button type="button" @click="open = !open"
                                 class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                <img class="size-8 rounded-full"
+                                <img class="size-8 rounded-full object-contain"
                                     src="{{ auth()->user()?->img ? asset('storage/' . auth()->user()->img) : asset('images/user.png') }}"
                                     alt="error" />
                             </button>

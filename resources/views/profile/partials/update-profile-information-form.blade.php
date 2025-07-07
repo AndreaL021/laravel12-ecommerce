@@ -24,7 +24,7 @@
             <button type="button" onclick="document.getElementById('imageInput').click()"
                 class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                <img id="preview" class="w-[200px] rounded-full"
+                <img id="preview" class="w-[200px] rounded-full object-contain"
                     src="{{ $user->img ? asset('storage/' . $user->img) : asset('images/user.png') }}" alt="error" />
             </button>
         </div>
