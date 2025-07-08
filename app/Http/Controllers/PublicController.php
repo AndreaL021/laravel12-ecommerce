@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
-use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -14,6 +13,17 @@ class PublicController extends Controller
         $announcements = Announcement::latest()
             ->paginate(20);
         return view('welcome', compact('announcements'));
+    }
+    public function show(Announcement $announcement)
+    {
+    $announcements = Announcement::where('id', '!=', $announcement->id)
+        ->whereHas('categories', function ($query) use ($announcement) {
+            $query->whereIn('categories.id', $announcement->categories->pluck('id'));
+        })
+        ->latest()
+        ->take(12)
+        ->get();
+        return view('show', compact('announcements', 'announcement'));
     }
     public function search(Request $request)
     {

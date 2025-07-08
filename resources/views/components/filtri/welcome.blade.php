@@ -2,7 +2,7 @@
 <div>
     <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 flex">
         {{-- <form method="POST" action="{{ route('announcement.filter') }}" @submit="loading = true"> --}}
-        @csrf
+        {{-- @csrf --}}
         <!-- title -->
         {{-- <input id="title" placeholder="{{ __('navbar.search') }}" class="block w-full" name="title"
             value="{{ old('title') }}"> --}}
@@ -12,7 +12,7 @@
 
         <!-- categorie -->
         {{-- :selectedItems="$announcement->categories->map(fn($c) => ['id' => $c->id, 'name' => __($c->name)])" --}}
-        <x-select multiple label="{{ __('announcement.categories') }}" :items="$categories" name="categories"></x-select>
+        {{-- <x-select multiple label="{{ __('announcement.categories') }}" :items="$categories" name="categories"></x-select> --}}
 
         <!-- Bottone -->
         {{-- <button type="submit"

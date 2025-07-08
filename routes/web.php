@@ -9,6 +9,7 @@ use App\Http\Controllers\AnnouncementImageController;
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/search', 'search')->name('search');
+    Route::get('/show/{announcement}', 'show')->name('show');
 });
 
 
@@ -25,7 +26,6 @@ Route::delete('/images/{image}', [AnnouncementImageController::class, 'destroy']
 Route::middleware('auth')->controller(AnnouncementController::class)->group(function () {
     Route::get('/announcement/user', 'index')->name('announcement.index');
     Route::get('/announcement/search', 'search')->name('announcement.search');
-    Route::get('/announcement/show', 'show')->name('announcement.show');
     Route::get('/announcement/create', 'create')->name('announcement.create');
     Route::post('/announcement/store', 'store')->name('announcement.store');
     Route::get('/announcement/edit/{announcement}', 'edit')->name('announcement.edit');

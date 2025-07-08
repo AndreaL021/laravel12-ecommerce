@@ -10,9 +10,9 @@
     $image = $announcement->images->first()?->path;
 @endphp
 
-<a href="{{ route('announcement.edit', compact('announcement')) }}" style="text-decoration: none">
+<a href="{{ $announcement->user->id==Auth::user()->id ? route('announcement.edit', compact('announcement')) : route('show', compact('announcement'))}}" style="text-decoration: none">
     <div class="w-full h-full rounded-xl overflow-hidden shadow-lg flex flex-col">
-        <img class="w-full h-48 object-contain" src="{{ $image ? asset('storage/' . $image) : asset('images/user.png') }}"
+        <img class="w-full h-48 object-contain" src="{{ $image ? asset('storage/' . $image) : asset('images/placeholder.png') }}"
             alt="Immagine annuncio">
         <div class="px-4">
             <div class="font-bold flex justify-between items-center">{{ $user->name }}
@@ -21,11 +21,8 @@
             </div>
             <div class="font-bold text-xl mb-2 flex justify-between items-center">
                 <div>{{ $title }} </div>
-                <div>${{ $price }} </div>
+                <div>€ {{ $price }} </div>
             </div>
-            {{-- <p class="text-gray-700 text-base">
-            {{ $des }}
-        </p> --}}
         </div>
         <div class="px-4">
             @foreach ($categories as $category)

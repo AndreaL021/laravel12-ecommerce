@@ -75,11 +75,6 @@ class AnnouncementController extends Controller
         ]);
     }
 
-    public function show(Announcement $announcement)
-    {
-        return view('announcements.show', compact('announcement'));
-    }
-
     public function edit(Announcement $announcement)
     {
         if ($announcement->user_id !== auth()->id()) {
