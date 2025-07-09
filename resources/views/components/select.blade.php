@@ -37,7 +37,7 @@
     <!-- Dropdown options -->
     <div x-show="open" @click.away="open = false"
         class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto">
-        <template x-for="option in options" :key="option.id">
+        <template x-for="(option, index) in options" :key="index">
             <div @click="toggleOption(option)" class="px-4 py-2 cursor-pointer hover:bg-gray-100 flex items-center">
                 <template x-if="@js($multiple)">
                     <input type="checkbox" class="mr-2" :checked="isSelected(option)" readonly>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Hidden inputs for form submit -->
-    <template x-for="item in selected" :key="item.id">
+    <template x-for="(item, index) in selected" :key="index">
         <input type="hidden" name="{{ $multiple ? $name . '[]' : $name }}" :value="item.id">
     </template>
 </div>

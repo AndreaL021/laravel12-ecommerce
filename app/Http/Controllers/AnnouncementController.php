@@ -71,7 +71,7 @@ class AnnouncementController extends Controller
         return redirect()->route('announcement.index')->with([
             'status' => 'success',
             'title' => '',
-            'message' => 'Annuncio creato con successo.'
+            'message' => 'announcement.created'
         ]);
     }
 
@@ -87,7 +87,6 @@ class AnnouncementController extends Controller
         }
         return view('announcements.edit', compact('announcement'));
     }
-
     public function update(AnnouncementRequest $request, Announcement $announcement)
     {
         if ($announcement->user_id !== auth()->id()) {
@@ -106,6 +105,18 @@ class AnnouncementController extends Controller
 
         $announcement->categories()->sync($request->categories ?? []);
 
+        // Elimina le immagini selezionate
+        if ($request->has('delete_images')) {
+            foreach ($request->delete_images as $imageId) {
+                $image = $announcement->images()->find($imageId);
+                if ($image) {
+                    Storage::disk('public')->delete($image->path);
+                    $image->delete();
+                }
+            }
+        }
+
+        // Salva nuove immagini
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
                 $path = $img->store('announcements', 'public');
@@ -116,10 +127,9 @@ class AnnouncementController extends Controller
         return redirect()->route('announcement.index')->with([
             'status' => 'success',
             'title' => '',
-            'message' => 'Annuncio aggiornato con successo.'
+            'message' => 'announcement.updated'
         ]);
     }
-
     public function destroy(Announcement $announcement)
     {
         if ($announcement->user_id !== auth()->id()) {
@@ -135,7 +145,7 @@ class AnnouncementController extends Controller
         return redirect()->route('announcement.index')->with([
             'status' => 'success',
             'title' => '',
-            'message' => 'Annuncio eliminato.'
+            'message' => 'announcement.deleted'
         ]);
     }
 }

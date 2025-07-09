@@ -1,7 +1,6 @@
 <?php
 
 return [
-    "selected" => "Seleziona",
     "home" => "Home",
     "team" => "Team",
     "projects" => "Progetti",
@@ -14,4 +13,5 @@ return [
     "search" => "Cerca",
     "my_announcements" => "I miei annunci",
     "create_announcement" => "Crea annuncio",
+    "select" => "Seleziona",
 ];

@@ -15,9 +15,9 @@ class AnnouncementImageController extends Controller
         // Verifica che l'utente sia proprietario dell'annuncio
         if (auth()->id() !== $announcement->user_id) {
             return back()->with([
-                'status' => 'success',
+                'status' => 'warning',
                 'title' => '',
-                'message' => 'Non autorizzato.'
+                'message' => 'validation.authorization'
             ]);
         }
 
@@ -30,7 +30,7 @@ class AnnouncementImageController extends Controller
         return back()->with([
             'status' => 'success',
             'title' => '',
-            'message' => 'Immagine rimossa con successo.'
+            'message' => 'announcement.image_deleted'
         ]);
     }
 }

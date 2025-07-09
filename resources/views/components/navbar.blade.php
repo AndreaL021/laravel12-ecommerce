@@ -7,12 +7,12 @@
             ],
         )
         ->toArray();
-    array_unshift($categories_items, ['id' => null, 'name' => __('Seleziona')]);
+    array_unshift($categories_items, ['id' => null, 'name' => __('navbar.select')]);
 
     $selected_items = collect($categories)->firstWhere('id', request('category'));
     $selected_items = $selected_items
         ? [['id' => $selected_items->id, 'name' => __($selected_items->name)]]
-        : [['id' => null, 'name' => __('navbar.selected')]];
+        : [['id' => null, 'name' => __('navbar.select')]];
 @endphp
 <nav class="bg-gray-800 fixed top-0 left-0 w-full z-50">
     <div class="w-full sm:px-3 px-0">
