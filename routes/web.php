@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\AnnouncementImageController;
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'index')->name('home');
@@ -18,10 +17,6 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
     Route::patch('/profile', 'update')->name('profile.update');
     Route::delete('/profile', 'destroy')->name('profile.destroy');
 });
-
-
-Route::delete('/images/{image}', [AnnouncementImageController::class, 'destroy'])->name('images.destroy');
-
 
 Route::middleware('auth')->controller(AnnouncementController::class)->group(function () {
     Route::get('/announcement/user', 'index')->name('announcement.index');
