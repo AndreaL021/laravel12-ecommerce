@@ -3,8 +3,7 @@
     <div>
         <div class="flex justify-center items-center">
             <form action="{{ route('announcement.create') }}" method="get" @submit="loading = true">
-                <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-5 px-12 rounded">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-5 px-12 rounded">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </form>
@@ -19,7 +18,11 @@
             @forelse ($announcements as $announcement)
                 <x-card :announcement="$announcement" />
             @empty
-                <p class="text-center">Nessun annuncio trovato.</p>
+                <div class="flex items-center justify-center col-span-full py-10">
+                    <p class="text-center text-gray-500 text-lg">
+                        {{ __('announcement.no_announcement') }}
+                    </p>
+                </div>
             @endforelse
         </div>
     </div>

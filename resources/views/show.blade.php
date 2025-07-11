@@ -85,7 +85,11 @@
         @forelse ($announcements as $announcement)
             <x-card :announcement="$announcement" />
         @empty
-            <p class="text-center">{{ __('announcement.no_announcement.') }}</p>
+            <div class="flex items-center justify-center col-span-full py-10">
+                <p class="text-center text-gray-500 text-lg">
+                    {{ __('announcement.no_announcement') }}
+                </p>
+            </div>
         @endforelse
     </div>
 </x-layout>
