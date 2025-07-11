@@ -18,4 +18,5 @@ return [
     'updated' => 'Annonce mise à jour avec succès.',
     'deleted' => 'Annonce supprimée.',
     'image_deleted' => 'Image supprimée avec succès.',
+    'no_announcement' => 'Aucune annonce trouvée.'
 ];

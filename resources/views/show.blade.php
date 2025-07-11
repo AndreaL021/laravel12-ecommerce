@@ -81,11 +81,11 @@
     <div class="mt-10 text-center text-gray-500">
         {{ __('announcement.related_announcement') }}
     </div>
-    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 flex">
+    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 flex text-center">
         @forelse ($announcements as $announcement)
             <x-card :announcement="$announcement" />
         @empty
-            <p class="text-center">Nessun annuncio trovato.</p>
+            <p class="text-center">{{ __('announcement.no_announcement.') }}</p>
         @endforelse
     </div>
 </x-layout>
